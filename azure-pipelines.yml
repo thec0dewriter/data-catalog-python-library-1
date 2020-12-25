@@ -29,7 +29,7 @@ steps:
     pip install -r requirements.txt
   displayName: 'Install dependencies'
 
-- task: SonarCloudPrepare 
+- task: SonarCloudPrepare@1
   displayName: 'Prepare analysis configuration'
   inputs:
     SonarCloud: 'SC'
@@ -54,19 +54,19 @@ steps:
     pytest tests --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml --cov-report=html
   displayName: 'Test with pytest'
 
-- task: SonarCloudAnalyze 
+- task: SonarCloudAnalyze@1
   displayName: 'Run SonarCloud analysis'
 
-- task: SonarCloudPublish 
+- task: SonarCloudPublish@1 
   displayName: 'Publish results on build summary'
 
-- task: PublishTestResults 
+- task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
     testResultsFiles: '**/test-*.xml'
     testRunTitle: 'Publish test results for Python $(python.version)'
 
-- task: PublishCodeCoverageResults 
+- task: PublishCodeCoverageResults@1 
   inputs:
     codeCoverageTool: Cobertura
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'

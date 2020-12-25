@@ -7,3 +7,4 @@ pytest-cov
 pytest-mock
 wheel
 freezegun
+azure-storage-blob #Azure blobstorage clieny dependency

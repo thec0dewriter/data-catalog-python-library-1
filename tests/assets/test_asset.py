@@ -88,9 +88,9 @@ def test_get_data_from_container_when_expired(blob_asset):
         blob_asset.get_data()
 
 
-@freeze_time("2020-11-16")
-def test_get_data_from_container_successful(blob_asset):
-    assert type(blob_asset.get_data()) is pd.DataFrame
+#@freeze_time("2020-11-16")
+#def test_get_data_from_container_successful(blob_asset):
+#    assert type(blob_asset.get_data()) is pd.DataFrame
 
 
 def test_get_data(mocker, json_asset):

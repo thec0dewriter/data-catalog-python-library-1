@@ -29,6 +29,15 @@ steps:
     pip install -r requirements.txt
   displayName: 'Install dependencies'
 
+- task: SonarCloudPrepare@1
+  displayName: 'Prepare analysis configuration'
+  inputs:
+    SonarCloud: 'SC'
+    organization: 'thec0dewriter-github'
+    scannerMode: 'CLI'
+    projectKey: 'thec0dewriter_data-catalog-python-library-1'
+    projectName: 'BlueBook Python'
+
 - script: |
     pip install pytest pytest-azurepipelines
     pytest tests
@@ -44,6 +53,12 @@ steps:
     pip install pytest-cov
     pytest tests --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml --cov-report=html
   displayName: 'Test with pytest'
+
+- task: SonarCloudAnalyze@1
+  displayName: 'Run SonarCloud analysis'
+
+- task: SonarCloudPublish@1
+  displayName: 'Publish results on build summary'
 
 - task: PublishTestResults@2
   condition: succeededOrFailed()
